@@ -22,7 +22,7 @@ type Request = {
 export async function fetchData(options: {
     pageIndex: number,
     pageSize: number
-}): Promise<Request[]> {
+}): Promise<Request> {
   const { pageIndex } = options
   const url = `https://rickandmortyapi.com/api/episode/?page=${pageIndex + 1}`
   try {
