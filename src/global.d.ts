@@ -28,6 +28,8 @@ declare module 'lucide-react' {
     export const Trash2: React.ComponentType<IconProps>;
     export const Pencil: React.ComponentType<IconProps>;
     export const Info: React.ComponentType<IconProps>;
+    export const UserRoundPlus: React.ComponentType<IconProps>;
+    export const CopyPlus: React.ComponentType<IconProps>;
 }
 
 /* 

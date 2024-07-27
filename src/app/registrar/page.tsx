@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export default function Registrar() {
     return (
-      <main className="container mx-auto md:grid md:grid-cols-2 mt-12 gap-10 p-5 items-center">
+      <main className="container h-screen mx-auto md:grid md:grid-cols-2 gap-10 p-5 items-center">
         <h1 className="text-slate-900 font-black text-3xl md:text-6xl capitalize">Crea tu cuenta y administra tus {' '}<span className="text-slate-600">personajes</span></h1>
 
         <form 
@@ -79,12 +79,12 @@ export default function Registrar() {
 
             <nav className="lg:flex lg:justify-between ">
                 <Link
-                    className="block text-center my-3 text-slate-500 uppercase text-sm"
+                    className="block text-center my-3 text-slate-500"
                     href="/"
                 >¿Ya tienes una cuenta? Inicia sesión aquí</Link>
         
                 <Link
-                    className="block text-center my-3 text-slate-500 uppercase text-sm"
+                    className="block text-center my-3 text-slate-500"
                     href="/olvide-password"
                 >Olvide mi password</Link>
             </nav>
