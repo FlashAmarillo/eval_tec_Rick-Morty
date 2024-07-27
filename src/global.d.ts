@@ -30,6 +30,12 @@ declare module 'lucide-react' {
     export const Info: React.ComponentType<IconProps>;
     export const UserRoundPlus: React.ComponentType<IconProps>;
     export const CopyPlus: React.ComponentType<IconProps>;
+    export const Check: React.ComponentType<IconProps>;
+    export const Search: React.ComponentType<IconProps>;
+    export const ChevronRight: React.ComponentType<IconProps>;
+    export const Circle: React.ComponentType<IconProps>;
+    export const X: React.ComponentType<IconProps>;
+    export const ChevronUp: React.ComponentType<IconProps>;
 }
 
 /* 
