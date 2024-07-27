@@ -105,7 +105,7 @@ export const columns: ColumnDef<Character>[] = [
               <DropdownMenuItem
                 onClick={() => navigator.clipboard.writeText(character)}
               >
-                Copy payment ID
+                Copy character ID
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem className="flex gap-2">
