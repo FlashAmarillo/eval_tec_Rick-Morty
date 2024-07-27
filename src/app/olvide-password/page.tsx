@@ -3,7 +3,7 @@ import Link from 'next/link'
 const page = () => {
   return (
     <main className="container h-screen mx-auto md:grid md:grid-cols-2 gap-10 p-5 items-center">
-        <h1 className="text-slate-900 font-black text-4xl md:text-6xl">Recupera tu Acceso y no Pierdas {""}<span className="text-slate-600">tus Pacientes</span></h1>
+        <h1 className="text-slate-900 font-black text-4xl md:text-6xl">Recupera tu Acceso y no Pierdas {""}<span className="text-slate-600">tus Personajes</span></h1>
         
         <form className="mt-8 md:mt-5 shadow px-5 py-10 rounded-xl bg-white">
             
