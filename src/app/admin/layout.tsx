@@ -12,7 +12,7 @@ export default function Layout({
           <Sidebar />
         </div>
         <div 
-          className="grid w-full h-full" /* TODO: REVISAR ESTOS ESTILOS, ROMPE EL ANCHO */
+          className="grid w-full h-full"
         >
           <Header />
           <div className="p-8">

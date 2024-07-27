@@ -34,7 +34,7 @@ const CreateEpisodeForm = ({ closeModal }: { closeModal: () => any }) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: "",
-      airDate: new Date().toISOString().split("T")[0],
+      airDate: new Date(),
       episode: "",
       characters: ""
     },

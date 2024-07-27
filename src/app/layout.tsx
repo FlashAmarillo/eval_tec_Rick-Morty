@@ -24,7 +24,6 @@ export default function RootLayout({
     <ReactQueryClientProvider>
       <html lang="en">
         <body 
-          //className={fontSans.className}
           className={cn(
             "min-h-screen bg-gray-50 font-sans antialiased",
             fontSans.variable
