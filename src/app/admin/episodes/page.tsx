@@ -51,7 +51,7 @@ export default function Episodes() {
           data={dataQuery.data?.results ?? []} 
           columns={episodesColumns}
           pagination={pagination}
-          setPagination={setPagination}
+          setPagination={() => setPagination}
         />
 
         <AlertCreateEpisode>

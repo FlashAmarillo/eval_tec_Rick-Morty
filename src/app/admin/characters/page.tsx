@@ -52,7 +52,7 @@ export default function Characters() {
           data={dataQuery.data?.results ?? []} 
           columns={charactersColumns} 
           pagination={pagination}
-          setPagination={setPagination}
+          setPagination={() => setPagination}
         />
 
         <AlertCreateCharacter>
