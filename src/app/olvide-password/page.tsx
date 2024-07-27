@@ -13,8 +13,6 @@ const page = () => {
                     type="email"
                     placeholder="Tu Email"
                     className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
-                    //value={email}
-                    //onChange={e => setEmail(e.target.value)}
                     
                 />
             </div>
