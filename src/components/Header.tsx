@@ -12,7 +12,11 @@ import {
 import { useState } from "react"
 
   
-export default function Header() {
+export default function Header({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   
   const [notifications, setNotifications] = useState<any>([
     {
@@ -28,30 +32,33 @@ export default function Header() {
   ])
 
   return (
-    <div className="grid grid-cols-2 p-4 border-b">
+    <header className="grid grid-cols-2 p-4 border-b">
+      <div className="flex gap-2 items-center">
+        {children}
         <CommandDemo />
-        <div className="flex justify-end">
-            <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                    <Button variant="outline" size="icon" className="relative">
-                        <div className={`absolute -top-1 -right-1 h-2 w-2 rounded-full my-1 ${notifications.find((x: any) => x.read === true) ? 'bg-green-500' : 'bg-neutral-200'}`}></div>
-                        <BellIcon className="h-4 w-4" /> 
-                    </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {notifications.map((item: any, key: number) => (
-                    <DropdownMenuItem key={key} className="py-2 px-3 cursor-pointer hover:bg-neutral-50 transition flex items-start gap-2">
-                        <div className={`h-3 w-3 rounded-full my-1 ${!item.read ? 'bg-green-500' : 'bg-neutral-200'}`}></div>
-                        <div>
-                            <p>{item.text}</p>
-                            <p className="text-xs text-neutral-500">{item.date}</p>
-                        </div>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-            </DropdownMenu>
+      </div>
+      <div className="flex justify-end">
+          <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="icon" className="relative">
+                      <div className={`absolute -top-1 -right-1 h-2 w-2 rounded-full my-1 ${notifications.find((x: any) => x.read === true) ? 'bg-green-500' : 'bg-neutral-200'}`}></div>
+                      <BellIcon className="h-4 w-4" /> 
+                  </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {notifications.map((item: any, key: number) => (
+                  <DropdownMenuItem key={key} className="py-2 px-3 cursor-pointer hover:bg-neutral-50 transition flex items-start gap-2">
+                      <div className={`h-3 w-3 rounded-full my-1 ${!item.read ? 'bg-green-500' : 'bg-neutral-200'}`}></div>
+                      <div>
+                          <p>{item.text}</p>
+                          <p className="text-xs text-neutral-500">{item.date}</p>
+                      </div>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+          </DropdownMenu>
 
-        </div>
-    </div>
+      </div>
+    </header>
   )
 }

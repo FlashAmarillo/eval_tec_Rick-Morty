@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import { DataTable } from "@/components/DataTable"
 import { columns as episodesColumns } from "./components/ColumnsEpisodesConfig"
 import {
@@ -35,7 +35,7 @@ export default function Episodes() {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <main>
+      <main className="mx-auto p-6">
         
         <div className="flex flex-row justify-between">
           <h1 className="text-2xl font-bold">Check all the episodes of Rick and Morty</h1>
@@ -47,12 +47,16 @@ export default function Episodes() {
           </AlertDialogTrigger>
         </div>
         
-        <DataTable 
-          data={dataQuery.data?.results ?? []} 
-          columns={episodesColumns}
-          pagination={pagination}
-          setPagination={() => setPagination}
-        />
+        <Suspense
+          fallback={<p>Loading...</p>}
+        >
+          <DataTable 
+            data={dataQuery.data?.results ?? []} 
+            columns={episodesColumns}
+            pagination={pagination}
+            setPagination={() => setPagination}
+          />
+        </Suspense>
 
         <AlertCreateEpisode>
           <CreateEpisodeForm closeModal={closeModal} />

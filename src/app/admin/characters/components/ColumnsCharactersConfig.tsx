@@ -1,9 +1,7 @@
 "use client"
 
-import {
-  ColumnDef
-} from "@tanstack/react-table"
-
+import { ColumnDef } from "@tanstack/react-table"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { 
   ArrowUpDown,
   MoreHorizontal,
@@ -11,7 +9,6 @@ import {
   Pencil,
   Info 
 } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,25 +17,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
-type NameAndUrl = {
-  name: string;
-  url: string;
-}
-  
-export type Character = {
-  id: number
-  name: string
-  status: string | "Alive" | "Dead" | "Unknown"
-  species: string | "Human" | "Alien" | "Humanoid" | "Unknown" | "Poopybutthole" | "Mythological Creature" | "Animal" | "Robot" | "Cronenberg" | "Disease"
-  type: string
-  origin: NameAndUrl
-  location: NameAndUrl
-  image: string
-  episode: string[]
-  url: string
-  created: string
-}
+import { Button } from "@/components/ui/button"
+import CharacterDetails from "./CharacterDetails"
 
 export const columns: ColumnDef<Character>[] = [
   {
@@ -90,44 +70,52 @@ export const columns: ColumnDef<Character>[] = [
       id: "actions",
       enableHiding: false,
       cell: ({ row }) => {
-        const character = row.id
+        const propCharacter = row?.original
   
         return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
-                <span className="sr-only">Open menu</span>
-                <MoreHorizontal className="h-4 w-4" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem
-                onClick={() => navigator.clipboard.writeText(character)}
-              >
-                Copy character ID
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem className="flex gap-2">
-                <Info color='blue' size={14} />
-                <p>
-                  View Character
-                </p>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="flex gap-2">
-                <Pencil color='blue' size={14} />
-                <p>
-                  Edit Character
-                </p>
-              </DropdownMenuItem>
-              <DropdownMenuItem className="flex gap-2">
-                <Trash2 color='red' size={14} />
-                <p>
-                  Delete Character
-                </p>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Dialog>
+            <DropdownMenu>
+
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                  <MoreHorizontal className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+
+              <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem
+                  onClick={() => navigator.clipboard.writeText(row.id)}
+                >
+                  Copy character ID
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <DialogTrigger className="flex gap-2 items-center">
+                    <Info size={14} />
+                    <p>
+                      View Details
+                    </p>
+                  </DialogTrigger>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex gap-2">
+                  <Pencil size={14} />
+                  <p>
+                    Edit Character
+                  </p>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="flex gap-2">
+                  <Trash2 color='red' size={14} />
+                  <p>
+                    Delete Character
+                  </p>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <CharacterDetails
+              character={propCharacter}
+            />
+          </Dialog>
         )
       },
     },
