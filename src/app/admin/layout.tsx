@@ -1,24 +1,24 @@
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
+import AppSidebar from "@/components/AppSidebar"
+import Header from "@/components/Header"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+
 
 export default function Layout({
     children,
   }: Readonly<{
-    children: React.ReactNode;
+    children: React.ReactNode
   }>) {
     return (
-      <main className="flex items-start justify-between">
-        <div className="hidden lg:flex min-w-[300px] border-r min-h-screen">
-          <Sidebar />
-        </div>
-        <div 
-          className="grid w-full h-full"
-        >
-          <Header />
-          <div className="p-8">
+      <SidebarProvider>
+        <AppSidebar />
+        <main className="flex min-h-dvh flex-col w-screen">
+          <Header>
+            <SidebarTrigger />
+          </Header>
+          <div>
             {children}
           </div>
-        </div>
-      </main>
-    );
+        </main>
+      </SidebarProvider>
+    )
   }

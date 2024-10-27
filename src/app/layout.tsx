@@ -8,6 +8,7 @@ import { Toaster } from "@/components/ui/toaster"
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: 'swap',
 })
 
 export const metadata: Metadata = {
@@ -22,10 +23,10 @@ export default function RootLayout({
 }>) {
   return (
     <ReactQueryClientProvider>
-      <html lang="en">
+      <html lang="en" className={fontSans.variable}>
         <body 
           className={cn(
-            "min-h-screen bg-gray-50 font-sans antialiased",
+            "bg-gray-50 antialiased overflow-auto",
             fontSans.variable
           )}
         >

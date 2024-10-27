@@ -1,83 +1,121 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react';
+import { useRouter } from 'next/navigation'
+import PublicRoute from './PublicRoute'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form"
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8, { message: "Password must be at least 8 characters."}).max(50),
+})
 
 export default function Home() {
+
+  const router = useRouter()
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  })
 
   type Credentials = {
     email: string;
     password: string;
   }
 
-  const [credentials, setCredentials] = useState<Credentials>({
-    email: '',
-    password: ''
-  })
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    // Obtener el arreglo de usuarios del localStorage
+    const users: User[] = JSON.parse(localStorage.getItem('users') || '[]')
 
-  const handleChange = (e: any) => {
-    setCredentials({
-        ...credentials,
-        [e.target.name]: e.target.value
-    });
-  }
-
-  const handleSubmit = (e: any) => {
-    e.preventDefault()
-    console.log('enviando...', credentials);
+    // Buscar el usuario en el arreglo
+    const user = users.find((user: User) => user.email === values.email && user.password === values.password)
+    
+    if (user) {
+      // Guardar el estado de inicio de sesión en localStorage
+      localStorage.setItem('isLoggedIn', 'true')
+      localStorage.setItem('loggedInUser', JSON.stringify({ name: user.name, email: user.email }))
+      alert('Logged in successfully!')
+      // Redirigir a la página de la aplicación
+      router.push('/admin')
+    } else {
+      alert('Invalid credentials')
+    }
   }
 
   return (
-    <main className="container mx-auto md:grid md:grid-cols-2 mt-12 gap-10 p-5 items-center">
-      <div>
-        <h1 className="text-slate-900 font-black text-3xl md:text-4xl lg:text-6xl">Inicia Sesión y Administra tus personajes <span className="text-slate-500">favoritos</span></h1>
-      </div>
-
-        <div className="mt-8 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
-            <form onSubmit={handleSubmit}>
-                <div className="my-5">
-                    <label htmlFor='email' className="uppercase text-gray-600 block text-xl font-bold">Email</label>
-                    <input 
-                        id="email"
-                        type="email"
-                        name="email"
-                        placeholder="Email de Registro"
-                        className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
-                        autoComplete="username"
-                        required
-                        //value={email}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <div className="my-5">
-                    <label htmlFor="password" className="uppercase text-gray-600 block text-xl font-bold">Password</label>
-                    <input 
-                        id="password"
-                        type="password"
-                        name="password"
-                        placeholder="Tu password"
-                        className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
-                        autoComplete="current-password"
-                        required
-                        //value={password}
-                        onChange={handleChange}
-                    />
-                </div>
-
-                <input 
-                    type="submit"
-                    value="Iniciar sesión"
-                    className="bg-slate-900 w-full py-3 px-10 rounded-xl text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-slate-600 md:w-auto transition-colors" 
-                />
-            </form>
-
-            <nav className="mt-10 lg:flex lg:justify-between">
-                <Link className="block text-center my-5 text-gray-500" href="/registrar">¿No tienes una cuenta? Registrate Aquí</Link>
-                <Link className="block text-center my-5 text-gray-500" href="/olvide-password">Olvide mi password</Link>
-            </nav>
+    <PublicRoute>
+      <main className="container h-screen mx-auto md:grid md:grid-cols-2 gap-10 p-5 items-center">
+        <div>
+          <h1 className="text-slate-900 font-black text-3xl md:text-4xl lg:text-6xl">Inicia Sesión y Administra tus personajes <span className="text-slate-500">favoritos</span></h1>
         </div>
 
-    </main>
+        <div className="mt-8 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }: { field: any}) => (
+                  <FormItem className='my-5'>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type='email' placeholder="Tu Email" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }: { field: any}) => (
+                  <FormItem className='my-5'>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type='password' placeholder="Tu password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <div className='flex justify-start'>
+                <Button
+                  size={'lg'} 
+                  className='my-5 text-lg'
+                  type="submit"
+                  value="Iniciar Sesión"
+                >Login</Button>
+              </div>
+
+
+            </form>
+          </Form>
+
+          <nav className="mt-10 lg:flex lg:justify-between">
+            <Link className="block text-center my-5 text-gray-500" href="/registrar">¿No tienes una cuenta? Registrate Aquí</Link>
+            <Link className="block text-center my-5 text-gray-500" href="/olvide-password">Olvide mi password</Link>
+          </nav>
+        </div>
+      </main>
+    </PublicRoute>
   );
 }

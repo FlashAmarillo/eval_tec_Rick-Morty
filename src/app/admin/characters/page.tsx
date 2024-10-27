@@ -36,7 +36,7 @@ export default function Characters() {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <main>
+      <main className="mx-auto p-6">
         
         <div className="flex flex-row justify-between">
           <h1 className="text-2xl font-bold">Meet all Rick & Morty characters</h1>
@@ -49,7 +49,7 @@ export default function Characters() {
         </div>
         
         <DataTable 
-          data={dataQuery.data?.results ?? []} 
+          data={dataQuery?.data?.results ?? []} 
           columns={charactersColumns} 
           pagination={pagination}
           setPagination={() => setPagination}
