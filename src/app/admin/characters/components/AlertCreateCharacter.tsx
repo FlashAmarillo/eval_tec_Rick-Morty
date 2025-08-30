@@ -4,6 +4,7 @@ import {
   AlertDialogDescription,
   AlertDialogHeader,
   AlertDialogTitle,
+  
 } from "@/components/ui/alert-dialog"
 
 export const AlertCreateCharacter = ({
@@ -12,17 +13,16 @@ export const AlertCreateCharacter = ({
   children: React.ReactNode;
 }>) => {
   return (
-    <div>
-        <AlertDialogContent>
+    <>
+        <AlertDialogContent className="max-w-fit">
           <AlertDialogHeader>
             <AlertDialogTitle>Create a Character</AlertDialogTitle>
             <AlertDialogDescription>
                 Insert the basic informaton for your new characters
             </AlertDialogDescription>
-            
-            {children}
           </AlertDialogHeader>
+            {children}
         </AlertDialogContent>
-    </div>
+    </>
   )
 }
