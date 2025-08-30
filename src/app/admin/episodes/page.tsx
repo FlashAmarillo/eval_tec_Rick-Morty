@@ -28,7 +28,7 @@ export default function Episodes() {
   const closeModal: () => any = () => setOpen(false)
 
   const dataQuery = useQuery({
-    queryKey: ['data', pagination],
+    queryKey: ['episodes-data', pagination],
     queryFn: () => fetchData(pagination),
     placeholderData: keepPreviousData, // don't have 0 rows flash while changing pages/loading next page
   })
@@ -47,16 +47,13 @@ export default function Episodes() {
           </AlertDialogTrigger>
         </div>
         
-        <Suspense
-          fallback={<p>Loading...</p>}
-        >
-          <DataTable 
-            data={dataQuery.data?.results ?? []} 
-            columns={episodesColumns}
-            pagination={pagination}
-            setPagination={() => setPagination}
-          />
-        </Suspense>
+        <DataTable 
+          data={dataQuery.data?.results ?? []} 
+          columns={episodesColumns}
+          pagination={pagination}
+          setPagination={() => setPagination}
+          loading={dataQuery?.isLoading ?? false}
+        />
 
         <AlertCreateEpisode>
           <CreateEpisodeForm closeModal={closeModal} />
