@@ -29,7 +29,7 @@ export default function Characters() {
   const closeModal: () => any = () => setOpen(false)
 
   const dataQuery = useQuery({
-    queryKey: ['data', pagination],
+    queryKey: ['characters-data', pagination],
     queryFn: () => fetchData(pagination),
     placeholderData: keepPreviousData
   })
@@ -53,6 +53,7 @@ export default function Characters() {
           columns={charactersColumns} 
           pagination={pagination}
           setPagination={() => setPagination}
+          loading={dataQuery?.isLoading ?? false}
         />
 
         <AlertCreateCharacter>

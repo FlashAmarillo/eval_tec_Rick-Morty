@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { Suspense, useState } from "react"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -39,14 +39,16 @@ interface DataTableProps<TData, TValue> {
     pageIndex: number
     pageSize: number
   }
-  setPagination: () => any
+  setPagination: () => any,
+  loading: boolean
 }
 
 export function DataTable<TData, TValue>({
   data,
   columns,
   pagination,
-  setPagination
+  setPagination,
+  loading
 }: DataTableProps<TData , TValue>) {
   
   const [sorting, setSorting] = useState<SortingState>([])
@@ -56,7 +58,7 @@ export function DataTable<TData, TValue>({
   const [globalFilter, setGlobalFilter] = useState('')
 
   const table = useReactTable({
-    data,
+    data: loading ? [] : data,
     columns,
     rowCount: data?.length,
     onSortingChange: setSorting,
@@ -141,19 +143,19 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows?.map((row) => (
-                <TableRow
-                  key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
-                >
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
-                      {flexRender(
-                        cell.column.columnDef.cell,
-                        cell.getContext()
-                      )}
-                    </TableCell>
-                  ))}
-                </TableRow>
+                  <TableRow
+                    key={row.id}
+                    data-state={row.getIsSelected() && "selected"}
+                  >
+                    {row.getVisibleCells().map((cell) => (
+                      <TableCell key={cell.id}>
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </TableCell>
+                    ))}
+                  </TableRow>
               ))
             ) : (
               <TableRow>
